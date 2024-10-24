@@ -27,14 +27,37 @@ no *insereNo(no *raiz, no *noInserido){
     return raiz; //se não for possivel inserir (o valor ja existe) retornamos o proprio valor
 }
 
+void preOrdem(no *raiz){
+    //função ou ação 
+    if(raiz->esq != NULL) return raiz->esq; //anda para esquerda na arvore
+    if(raiz->dir != NULL) return raiz->dir; //anda para direita na arvore
+}
+
+void emOrdem(no *raiz){
+    if(raiz->esq != NULL) return raiz->esq; //anda para esquerda na arvore
+    //função ou ação 
+    if(raiz->dir != NULL) return raiz->dir; //anda para direita na arvore
+    
+}
+
+void posOrdem(no *raiz){
+    if(raiz->esq != NULL) return raiz->esq; //anda para esquerda na arvore
+    if(raiz->dir != NULL) return raiz->dir; //anda para direita na arvore
+    free(raiz);
+}
+
+
+
 int main(){
-    no *raiz = NULL;
+    no *raiz = NULL; //inicia a raiz da arvore como nulo para a primeira inserção estar correta
+    int contador = 10; //contador de quantos elementos seram inseridos na arvore
     
-    raiz = insereNo(raiz,alocaNo(1));
-    raiz = insereNo(raiz,alocaNo(2));
-    raiz = insereNo(raiz,alocaNo(3));
-    raiz = insereNo(raiz,alocaNo(4));
-    raiz = insereNo(raiz,alocaNo(5));
+    for(int i = 0; i < contador; i++){
+        raiz = insereNo(raiz, alocaNo(i+1)); // insere o nó na arvore de 1 a 10
+    }
     
+    posOrdem(raiz); // função para liberar todos os nós na arvore
+    raiz = NULL;
+
     return 0;
 }
