@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<stdbool.h>
-
-//Como se trata de uma arvore binaria comum não precisamos de altura já que ela não possui balanceamento
-typedef struct noArvore{
-    int valor; //Valor inteiro a ser inserido
-    struct noArvore *esq, *dir; //ponteiros para filhos a esquerda e direita 
-}no;
+#include "arvore.h"
 
 no *alocaNo(int valor){ //Passamos o valor inteiro a ser inserido na memoria
     no *novoNo = (no*)malloc(sizeof(no)); //Aloca o novo nó na memoria
