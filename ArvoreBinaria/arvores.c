@@ -28,6 +28,10 @@ no *insereNo(no *raiz, no *noInserido){
     return raiz; //se não for possivel inserir (o valor ja existe) retornamos o proprio valor
 }
 
+void liberaNo(no *raiz){
+    free(raiz);
+}
+
 void preOrdem(no *raiz){
     if(raiz != NULL){
         printf("\n%d",raiz->valor); //exibe o valor do no atual
@@ -48,7 +52,7 @@ void posOrdem(no *raiz){
     if(raiz != NULL){
         posOrdem(raiz->esq); //anda para esquerda na arvore
         posOrdem(raiz->dir); //anda para direita na arvore
-        free(raiz);
+        liberaNo(raiz); //libera o nó
     }
 }
 
