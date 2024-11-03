@@ -51,11 +51,79 @@ void posOrdem(no *raiz){
     }
 }
 
-bool busca(no *raiz, int valor){
-    if(raiz == NULL) return false; //caso não encontre o valor
-    if(raiz->valor == valor) return true; //se o valor que estamos procuramos está na arvore retornamos verdadeiro
+no *busca(no *raiz, int valor){
+    if(raiz == NULL) return NULL; //caso não encontre o valor
+    if(raiz->valor == valor) return raiz; //se o valor que estamos procuramos está na arvore retornamos verdadeiro
     if(raiz->valor < valor) return busca(raiz->dir, valor); //se o valor for maior procuramos pra direita
     return busca (raiz->esq, valor); //se o valor for menor procuramos pela esquerda
+}
+
+no *buscaPai(no *raiz, no *n) {
+    no *pai = NULL;
+    no *atual = raiz;
+
+    while (atual && atual != n) {
+        pai = atual;
+        if (n->valor < atual->valor) {
+            atual = atual->esq;
+        } else {
+            atual = atual->dir;
+        }
+    }
+    return pai;
+}
+
+no *removeNo(no *n) {
+    if (!n->esq) {
+        no *temp = n->dir;
+        free(n);
+        return temp;
+    } else if (!n->dir) {
+        no *temp = n->esq;
+        free(n);
+        return temp;
+    }
+
+    // Caso em que o nó tem ambos os filhos
+    no *temp = n->esq;
+    no *paiTemp = n;
+
+    // Encontrar o maior nó na subárvore esquerda
+    while (temp->dir) {
+        paiTemp = temp;
+        temp = temp->dir;
+    }
+
+    // Substituir o valor do nó a ser removido pelo valor do maior nó à esquerda
+    n->valor = temp->valor;
+
+    // Remover o nó sucessor na posição original
+    if (paiTemp->dir == temp) {
+        paiTemp->dir = temp->esq;
+    } else {
+        paiTemp->esq = temp->esq;
+    }
+
+    free(temp);
+    return n;
+}
+
+
+no *removeRaiz(no *raiz, int valor){
+    no *n = busca(raiz, valor);
+    if(n){
+        no *pai = buscaPai(raiz, n);
+        if(pai){
+            if(pai->dir == n){
+                pai->dir = removeNo(n);
+            }else{
+                pai->esq = removeNo(n);
+            }
+        }else{
+            raiz = removeNo(n);
+        }
+    }
+    return raiz;
 }
 
 int main(){
